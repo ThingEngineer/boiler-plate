@@ -6,9 +6,11 @@ import { getSiteTitle } from "../../utils/supabase/server";
 export default async function Login({
   searchParams,
 }: {
-  searchParams: { message: string };
+  searchParams: { message?: string };
 }) {
   const siteTitle = await getSiteTitle();
+  // Await searchParams before using its properties as required by Next.js
+  const params = await searchParams;
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -69,11 +71,11 @@ export default async function Login({
         >
           Sign Up
         </SubmitButton>
-        {searchParams?.message && (
+        {params?.message ? (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
+            {params.message}
           </p>
-        )}
+        ) : null}
       </form>
     </div>
   );
