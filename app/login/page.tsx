@@ -1,8 +1,15 @@
-import Link from "next/link"
-import { SubmitButton } from "./submit-button"
-import { signIn, signUp } from "./actions"
+import Link from "next/link";
+import { SubmitButton } from "./submit-button";
+import { signIn, signUp } from "./actions";
+import { getSiteTitle } from "../../utils/supabase/server";
 
-export default function Login({ searchParams }: { searchParams: { message: string } }) {
+export default async function Login({
+  searchParams,
+}: {
+  searchParams: { message: string };
+}) {
+  const siteTitle = await getSiteTitle();
+
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <Link
@@ -25,6 +32,8 @@ export default function Login({ searchParams }: { searchParams: { message: strin
         </svg>{" "}
         Back
       </Link>
+
+      <h1 className="text-2xl font-bold text-center mb-4">{siteTitle}</h1>
 
       <form className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
         <label className="text-md" htmlFor="email">
@@ -67,5 +76,5 @@ export default function Login({ searchParams }: { searchParams: { message: strin
         )}
       </form>
     </div>
-  )
+  );
 }
